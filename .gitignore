@@ -1,0 +1,10 @@
+\ah
+.\vscode
+__pycache__/
+.venv/
+*.jpg
+*.png
+*.txt
+*.gcode
+*.json
+API_KEY.json
