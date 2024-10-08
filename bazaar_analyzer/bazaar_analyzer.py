@@ -49,8 +49,8 @@ def get_bazaar_product_names(bazaar_data):
             profitable_products.append(processed)
     return profitable_products
 
-API_FILE = open(r"bazaar_analyzer\API_KEY.json", "r")
-API_KEY = json.loads(API_FILE.read())["API_KEY"]
+# API_FILE = open(r"bazaar_analyzer\API_KEY.json", "r")
+# API_KEY = json.loads(API_FILE.read())["API_KEY"]
 example_player_uuid = "c3bbf8229941477d9aeaa2d245882bcc"
 
 # For testing purposes bazaar data is store in a json file and loads it if it exists to prevent making unnecessary requests

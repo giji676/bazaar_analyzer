@@ -6,6 +6,7 @@ if op: import winsound
 from concurrent.futures import ThreadPoolExecutor
 from timeit import default_timer
 import time
+import pyautogui
 
 import pandas as pd
 import requests
@@ -30,7 +31,7 @@ LOWEST_PRICE = 5
 NOTIFY = False
 
 # Constant for the lowest percent difference you want to be shown to you; feel free to change this
-LOWEST_PERCENT_MARGIN = 1/3
+LOWEST_PERCENT_MARGIN = 1/2
 
 START_TIME = default_timer()
 
@@ -97,7 +98,17 @@ def main():
     loop.run_until_complete(future)
     
     # Makes sure all the results are still up to date
-    if len(results): results = [[entry, prices[entry[3]][1]] for entry in results if (entry[2] > LOWEST_PRICE and prices[entry[3]][1] != float('inf') and prices[entry[3]][0] == entry[2] and prices[entry[3]][0]/prices[entry[3]][1] < LOWEST_PERCENT_MARGIN)]
+    if len(results):
+        #results = [[entry, prices[entry[3]][1]] for entry in results if (entry[2] > LOWEST_PRICE and prices[entry[3]][1] != float('inf') and prices[entry[3]][0] == entry[2] and prices[entry[3]][0]/prices[entry[3]][1] < LOWEST_PERCENT_MARGIN)]
+
+        for entry in results:
+            #entry[0] = uuid
+            #entry[1] = item name
+            #entry[2] = price
+            #entry[3] = name+tier
+            if (entry[2] > LOWEST_PRICE and prices[entry[3]][1] != float('inf') and prices[entry[3]][0] == entry[2] and prices[entry[3]][0]/prices[entry[3]][1] < LOWEST_PERCENT_MARGIN):
+                app = [entry, prices[entry[3]][1]]
+                results.append(app)
     
     if len(results): # if there's results to print
 
@@ -108,10 +119,14 @@ def main():
                 app_icon = None,
                 timeout = 4,
             )
-        
-        df=pd.DataFrame(['/viewauction ' + str(max(results, key=lambda entry:entry[1])[0][0])])
+        view_ah_string = ['/viewauction ' + str(max(results, key=lambda entry:entry[1])[0][0])]
+        df=pd.DataFrame(view_ah_string)
         df.to_clipboard(index=False,header=False) # copies most valuable auction to clipboard (usually just the only auction cuz very uncommon for there to be multiple
         
+        # pyautogui.press("enter")
+        # pyautogui.typewrite(view_ah_string[0])
+        # pyautogui.press("enter")
+
         done = default_timer() - START_TIME
         if op: winsound.Beep(500, 500) # emits a frequency 500hz, for 500ms
         for result in results:
