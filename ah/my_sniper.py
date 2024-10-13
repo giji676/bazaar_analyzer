@@ -143,9 +143,9 @@ def analyse_item(item):
         return
     # If all the margin requirements are met
     # Add the necessary data to results list
-    if (profit_percentage >= MIN_PROFIT_PERCENTAGE and profit_amount >= MIN_PRIFIT_IF_MIN_PROFIT_PERCENTAGE
+    if ((profit_percentage >= MIN_PROFIT_PERCENTAGE and profit_amount >= MIN_PRIFIT_IF_MIN_PROFIT_PERCENTAGE
         ) or (profit_amount >= MIN_PRIFIT_AMOUNT
-        ) and prices[item_name][0] < MAX_COST:
+        )) and (prices[item_name][0] < MAX_COST):
         print_name = item["item_name"]
         if filtering_lists["rarity_upgrade_filter"] in item_lore:
             print_name = "".join([print_name, "(re)"])
@@ -231,9 +231,9 @@ def main():
             
             if (prices[result[3]][1] != float("inf")
                 ) and (prices[result[3]][0] == result[2]
-                ) and ((profit_percentage >= MIN_PROFIT_PERCENTAGE and profit_amount >= MIN_PRIFIT_IF_MIN_PROFIT_PERCENTAGE
+                ) and (((profit_percentage >= MIN_PROFIT_PERCENTAGE and profit_amount >= MIN_PRIFIT_IF_MIN_PROFIT_PERCENTAGE
                 ) or (profit_amount >= MIN_PRIFIT_AMOUNT
-                ) and prices[result[3]][0] < MAX_COST):
+                )) and prices[result[3]][0] < MAX_COST):
                 # If len == 4 -- it does not include the clean_item data
                 if len(result) == 4:
                     results[result_index] = results[result_index] + [prices[result[3]][1]]
